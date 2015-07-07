@@ -7,9 +7,7 @@ import helpers
 
 
 class NeuralNet:
-    def __init__(self, n_inputs, n_outputs,
-            hidden_layers, hidden_layer_sizes=[]):
-
+    def __init__(self, n_inputs, n_outputs, hidden_layer_sizes=[]):
         self.n_inputs = n_inputs
         self.n_outputs = n_outputs
         self.layers = []
@@ -20,11 +18,13 @@ class NeuralNet:
 
         # Generate the hidden layers
         layer_size_cycle = itertools.cycle(hidden_layer_sizes)
-        for _0 in xrange(hidden_layers):
+        for _0 in xrange(len(hidden_layer_sizes):
             layer_neurons = []
             for _1 in xrange(layer_size_cycle.next()):
-                # Initialize random weights for each of the inputs from prev. layer
+                # Initialize random weights for each of the inputs from
+                # previous layer
                 weights = [random.random() for i in xrange(len(self.layers[-1]))]
+                # Keep a tally of how many node weights there are overall
                 self.num_node_weights += len(weights)
                 layer_neurons.append(Neuron(weights, self.layers[-1]))
             self.layers.append(layer_neurons)
@@ -36,6 +36,8 @@ class NeuralNet:
             weights = [random.random() for i in xrange(len(self.layers[-1]))]
             self.num_node_weights += len(weights)
             output_layer.append(Neuron(weights, self.layers[-1]))
+
+        # Add the output layer to the whole group of layers
         self.layers.append(output_layer)
 
 

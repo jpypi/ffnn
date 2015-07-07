@@ -17,7 +17,7 @@ class Neuron:
         # This "if" is used so that Neurons can be used for the input
         # layer and input can be set by simply setting the value
         if self.value != None:
-            return helpers.sigmoid(self.value)
+            return self.value # helpers.sigmoid(self.value)
 
         # This won't work if the weights and inputs
         # lists are different lengths
