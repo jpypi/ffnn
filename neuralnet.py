@@ -18,7 +18,7 @@ class NeuralNet:
 
         # Generate the hidden layers
         layer_size_cycle = itertools.cycle(hidden_layer_sizes)
-        for _0 in xrange(len(hidden_layer_sizes):
+        for _0 in xrange(len(hidden_layer_sizes)):
             layer_neurons = []
             for _1 in xrange(layer_size_cycle.next()):
                 # Initialize random weights for each of the inputs from
@@ -85,12 +85,12 @@ class NeuralNet:
 
 
 if __name__ == "__main__":
-    net = NeuralNet(4, 2, 4, [6])
+    net = NeuralNet(4, 2, [6])
 
     print len(net.layers)
     print map(len,net.layers)
     print(net.GetOutput((1,2,0.5,1)))
     weight=net.GetWeights()
     net.SetWeights(weight)
-    print(net.GetOutput((1,2,0.5)))
+    print(net.GetOutput((1,2,0.5,1)))
 
