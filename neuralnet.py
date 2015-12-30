@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 import random
 import itertools
 
@@ -23,7 +24,8 @@ class NeuralNet:
             for _1 in xrange(layer_size_cycle.next()):
                 # Initialize random weights for each of the inputs from
                 # previous layer
-                weights = [random.random() for i in xrange(len(self.layers[-1]))]
+                weights = [random.random()
+                           for i in xrange(len(self.layers[-1])+1)]
                 # Keep a tally of how many node weights there are overall
                 self.num_node_weights += len(weights)
                 layer_neurons.append(Neuron(weights, self.layers[-1]))
@@ -33,7 +35,7 @@ class NeuralNet:
         output_layer=[]
         for _0 in xrange(n_outputs):
             # Initialize random weights for each of the inputs from prev. layer
-            weights = [random.random() for i in xrange(len(self.layers[-1]))]
+            weights = [random.random() for i in xrange(len(self.layers[-1])+1)]
             self.num_node_weights += len(weights)
             output_layer.append(Neuron(weights, self.layers[-1]))
 
@@ -84,8 +86,9 @@ class NeuralNet:
                 neuron.weights=[weights.next() for _ in neuron.weights]
 
 
+# Short demo/test
 if __name__ == "__main__":
-    net = NeuralNet(4, 2, [6])
+    net = NeuralNet(4, 2, [6, 7, 8, 9, 10])
 
     print len(net.layers)
     print map(len,net.layers)

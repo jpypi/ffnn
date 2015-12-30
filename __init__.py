@@ -1,5 +1,5 @@
 import neuralnet
-import neuraon
+import neuron
 import helpers
 
 __all__ = ["neuralnet", "neuron", "helpers"]

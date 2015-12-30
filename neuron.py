@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 import helpers
 
 
@@ -6,6 +7,7 @@ class Neuron:
         self.weights = weights
         self.inputs  = inputs
         self.value   = None
+        self.bias    = -1
 
     def GetValue(self):
         """
@@ -19,24 +21,30 @@ class Neuron:
         if self.value != None:
             return self.value # helpers.sigmoid(self.value)
 
+        bias_weight_index = len(self.weights) - 1
+
         # This won't work if the weights and inputs
         # lists are different lengths
-        assert len(self.weights) == len(self.inputs)
+        assert len(self.weights) - 1 == len(self.inputs)
 
         # Find the sum of weighted inputs
         input_sum = 0
         for i, neuron in enumerate(self.inputs):
-            input_sum += neuron.GetValue() * self.weights[i]
+            if i < bias_weight_index:
+                input_sum += neuron.GetValue() * self.weights[i]
+
+        input_sum += self.weights[bias_weight_index] * self.bias
 
         return helpers.sigmoid(input_sum)
 
 
+# Short "unit" test
 if __name__ == "__main__":
     n1 = Neuron()
     n1.value = 2
     n2 = Neuron()
     n2.value = 3
 
-    n3 = Neuron([0.5, 0.25], [n1, n2])
+    n3 = Neuron([0.5, 0.25, 1], [n1, n2])
     print(n3.GetValue())
-    print(n3.GetValue() == helpers.sigmoid(2*0.5+3*0.25))
+    print(n3.GetValue() == helpers.sigmoid(2*0.5+3*0.25+-1*1))
