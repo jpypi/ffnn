@@ -1,23 +1,18 @@
 # Python Feed Forward Neural Net
 
-Just a simple frame for setting up a feed-forward neural net with weights. This
-is partially just so, having built the framework I obtain a better understanding
-of the inner workings of neural nets.
+Just a simple frame for setting up a feed-forward neural net. This is partially
+just so, having built the framework I have a better understanding of the inner
+workings of neural nets.
 
-Note: This does not proivde any built-in backpropagation. This is only the
+*Note:* This _does not_ proivde any backpropagation. This is only the
 neurons and net.
 
-To get values from the net simply call GetOutput() with values for the input
-layer and GetValue() will be called successivly from the output layer to its
-parents and to that layer's parents etc. propgating all the way to the input
-neurons.
+## Details
+- Net weights can all easily be pulled and replaced simultaneously (useful for
+  genetic algorithms.
+- All layers simply use all the outputs from the previous layer as inputs.
+- Supports an arbitrary number of hidden layers of arbitrary sizes.
+- Initial state for all weights on all neurons is given by Python's
+  random.random()
 
-## Todo
-
-- Potentially try to cache results of GetValue at each neuron to reduce the
-  inefficiency of calling GetValue all the way up to the input for every node.
-  (Or maybe make value propogate forward, though potentially a little more
-  complex, this would likely be more efficient.)
-
-
-Ok, enough writing here. On to using this thing with a GA!
+Ok, enough here. On to using this thing with a genetic algorithm.
