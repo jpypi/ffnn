@@ -44,20 +44,20 @@ class NeuralNet:
 
 
     def GetOutput(self, input_values):
-        """
-        Calling this will cause a .GetValue() call to propgate backwards
-        through every node in the net starting at the output nodes. This action
-        will result in getting the values of the output layer nodes
-        len(input_values) must == len(n_inputs) set at initialization of net
-        """
-
         assert len(input_values)==self.n_inputs
 
         # Set the input neuron values
         for i, neuron in enumerate(self.layers[0]):
             neuron.value = input_values[i]
 
-        return [neuron.GetValue() for neuron in self.layers[-1]]
+        inputs = []
+        for layer in self.layers:
+            last_outputs = []
+            for neuron in layer:
+                last_outputs.append(neuron.GetValue(inputs))
+            inputs = last_outputs
+
+        return last_outputs
 
 
     def GetWeights(self):
@@ -85,14 +85,19 @@ class NeuralNet:
                 neuron.weights=[weights.next() for _ in neuron.weights]
 
 
-# Short demo/test
-if __name__ == "__main__":
+def test():
     net = NeuralNet(4, 2, [6, 7, 8, 9, 10])
 
     print len(net.layers)
     print map(len,net.layers)
-    print(net.GetOutput((1,2,0.5,1)))
+    print(net.GetOutput((1,0.2,0.1,1)))
     weight=net.GetWeights()
     net.SetWeights(weight)
     print(net.GetOutput((1,2,0.5,1)))
+
+
+# Profile the short test/demo
+if __name__ == "__main__":
+    import cProfile
+    cProfile.run("test()")
 
