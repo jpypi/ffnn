@@ -53,7 +53,6 @@ class NeuralNet:
 
         assert len(input_values)==self.n_inputs
 
-        input_values = helpers.scale_values(input_values)
         # Set the input neuron values
         for i, neuron in enumerate(self.layers[0]):
             neuron.value = input_values[i]
