@@ -3,8 +3,8 @@ import random
 import itertools
 
 # Other NN classes
-from neuron import Neuron
-import helpers
+from .neuron import Neuron
+from . import helpers
 
 
 class NeuralNet:
@@ -15,17 +15,17 @@ class NeuralNet:
         self.num_node_weights = 0
 
         # Set up the input layer
-        self.layers.append([Neuron() for _ in xrange(n_inputs)])
+        self.layers.append([Neuron() for _ in range(n_inputs)])
 
         # Generate the hidden layers
         layer_size_cycle = itertools.cycle(hidden_layer_sizes)
-        for _0 in xrange(len(hidden_layer_sizes)):
+        for _0 in range(len(hidden_layer_sizes)):
             layer_neurons = []
-            for _1 in xrange(layer_size_cycle.next()):
+            for _1 in range(next(layer_size_cycle)):
                 # Initialize random weights for each of the inputs from
                 # previous layer
                 weights = [random.random()
-                           for i in xrange(len(self.layers[-1])+1)]
+                           for i in range(len(self.layers[-1])+1)]
                 # Keep a tally of how many node weights there are overall
                 self.num_node_weights += len(weights)
                 layer_neurons.append(Neuron(weights, self.layers[-1]))
@@ -33,9 +33,9 @@ class NeuralNet:
 
         # Set up the output layer
         output_layer=[]
-        for _0 in xrange(n_outputs):
+        for _0 in range(n_outputs):
             # Initialize random weights for each of the inputs from prev. layer
-            weights = [random.random() for i in xrange(len(self.layers[-1])+1)]
+            weights = [random.random() for i in range(len(self.layers[-1])+1)]
             self.num_node_weights += len(weights)
             output_layer.append(Neuron(weights, self.layers[-1]))
 
@@ -82,14 +82,14 @@ class NeuralNet:
         weights = iter(weights)
         for layer in self.layers:
             for neuron in layer:
-                neuron.weights=[weights.next() for _ in neuron.weights]
+                neuron.weights=[next(weights) for _ in neuron.weights]
 
 
 def test():
     net = NeuralNet(4, 2, [6, 7, 8, 9, 10])
 
-    print len(net.layers)
-    print map(len,net.layers)
+    print(len(net.layers))
+    print(list(map(len,net.layers)))
     print(net.GetOutput((1,0.2,0.1,1)))
     weight=net.GetWeights()
     net.SetWeights(weight)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-import helpers
+from . import helpers
 
 
 class Neuron:
